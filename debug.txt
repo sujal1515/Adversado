@@ -1,0 +1,31 @@
+               // Drag effect (follow mouse velocity)
+               p.vx += mouseVx * force * 0.5;
+               p.vy += mouseVy * force * 0.5;
+               
+               // Repulsion (push away from exact mouse center)
+               if (distMouse > 1) { // Avoid division by zero
+                 p.vx -= (dxMouse / distMouse) * force * 4;
+                 p.vy -= (dyMouse / distMouse) * force * 4;
+               }
+           }
+
+           // Damping
+           p.vx *= 0.78;
+           p.vy *= 0.78;
+
+           p.x += p.vx;
+           p.y += p.vy;
+
+           let currentSize = p.baseSize;
+
+           ctx.fillStyle = p.color;
+           ctx.beginPath();
+           ctx.arc(p.x, p.y, currentSize, 0, Math.PI * 2);
+           ctx.fill();
+       });
+
+       animationFrameId = requestAnimationFrame(render);
+    };
+
+    render();
+
